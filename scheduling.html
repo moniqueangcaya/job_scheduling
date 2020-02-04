@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Scheduling</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mt-4">Shortest Job Scheduling</h1>
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="job" id="job" placeholder="Job" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="arrival" id="arrival" placeholder="Arrival Time">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="burst" id="burst" placeholder="Burst Time">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <button class="btn btn-primary" onclick="addHtmlTableRow();">Add Job</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <table class="table table-striped table-dark" id="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Job</th>
+                        <th scope="col">Arrival Time</th>
+                        <th scope="col">Burst Time</th>
+                        <th scope="col">Waiting Time</th>
+                        <th scope="col">Finish Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                      </tr>
+
+                      <tr>
+
+                      </tr>
+
+                      <tr>
+
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5>Time:</h5>
+                    <h5>Average WT:</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h1 class="mt-4 ml-3">Gantt Chart</h1>
+        </div>
+    </div>
+    
+    <script>
+        var rIndex;
+        var table = document.getElementById("table");
+        var jobNum = 1;
+        var jobValues = [];
+        var arrivalValues = [];
+        var burstValues = [];
+
+        
+        // check the empty input
+        function checkEmptyInput()
+        {
+            var isEmpty = false,
+                arrival = document.getElementById("arrival").value,
+                burst = document.getElementById("burst").value;
+        
+            if(arrival === ""){
+                alert("Arrival Time Connot Be Empty");
+                isEmpty = true;
+            }
+            else if(burst === ""){
+                alert("Burst Time Connot Be Empty");
+                isEmpty = true;
+            }
+            return isEmpty;
+        }
+        
+        // add Row
+        function addHtmlTableRow()
+        {
+            
+            // get the table by id
+            // create a new row and cells
+            // get value from input text
+            // set the values into row cell's
+            if(!checkEmptyInput()){
+            var newRow = table.insertRow(table.length),
+                cell1 = newRow.insertCell(0),
+                cell2 = newRow.insertCell(1),
+                cell3 = newRow.insertCell(2),
+                job = jobNum++,
+                arrival = document.getElementById("arrival").value,
+                burst = document.getElementById("burst").value;
+
+                //store input in an array
+                var inputJob = job;
+                jobValues.push(inputJob);
+                inputJob.value = "";  
+
+                var inputArrival = document.getElementById('arrival');
+                arrivalValues.push(inputArrival.value);
+                inputArrival.value = "";  
+
+                var inputBurst = document.getElementById('burst');
+                burstValues.push(inputBurst.value);
+                inputBurst.value = "";  
+
+            cell1.innerHTML = job;
+            cell2.innerHTML = arrival;
+            cell3.innerHTML = burst;
+            // call the function to set the event to the new row
+            selectedRowToInput();
+        }
+        }
+        
+        // display selected row data into input text
+        function selectedRowToInput()
+        { 
+            for(var i = 1; i < table.rows.length; i++)
+            {
+                table.rows[i].onclick = function()
+                {
+                  // get the selected row index
+                  rIndex = this.rowIndex;
+                  document.getElementById("job").value = this.cells[0].innerHTML;
+                  document.getElementById("arrival").value = this.cells[1].innerHTML;
+                  document.getElementById("burst").value = this.cells[2].innerHTML;
+                };
+            }
+        }
+        selectedRowToInput();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
